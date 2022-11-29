@@ -3,12 +3,12 @@ import os
 import glob
 import itertools
 import time
-conn = mysql.connector.connect(host="i6629imdb.cdyarwjuez7j.us-east-1.rds.amazonaws.com", port=3306,\
-    user="admin", passwd="123456789",allow_local_infile=True,database="airflow_6629")
+conn = mysql.connector.connect(host="rds host", port=rds port,\
+    user="rds username", passwd="rds password",allow_local_infile=True,database="database name")
 
-_path = "/home/vikash/Desktop/Project_self/imdb-dataset/"
-_path2 = "/home/vikash/Desktop/Project_self/imdb-dataset/*/*.tsv"
-# tlist=['name_basics','title_basic','title_akas','title_rating','title_principal']
+_path = "local path for table"
+_path2 = "local path of files"
+
 # Change the directory
 os.chdir(_path)
 files = os.listdir(_path)
