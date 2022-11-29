@@ -10,15 +10,11 @@
 # import requests
 # url = 'https://www.kaggle.com/datasets/whenamancodes/blood-transfusion-dataset'
 
-# act = {"username":"vikasyttn","key":"34d279ba4b1e10181116e1939e6e2063"}
-
 # response = requests.get(url,act)
 # open('data_demo2.csv','wb').write(response.content)
 
 # import requests
 # url = 'https://www.kaggle.com/datasets/whenamancodes/blood-transfusion-dataset'
-# username = 'vikasyttn'
-# password = '34d279ba4b1e10181116e1939e6e2063'
 # # response = requests.get(url, auth=(username, password)).content
 # open('data_demo2','wb').write(requests.get(url, auth=(username, password)).content)
 
@@ -39,8 +35,8 @@
 ###5
 
 # import os
-# os.environ['KAGGLE_USERNAME'] = "vikasyttn"
-# os.environ['KAGGLE_KEY'] = "34d279ba4b1e10181116e1939e6e2063"
+# os.environ['KAGGLE_USERNAME'] = "username"
+# os.environ['KAGGLE_KEY'] = "key"
 # !kaggle datasets download -d whenamancodes/blood-transfusion-dataset
 
 
@@ -50,4 +46,4 @@ import kaggle
 
 kaggle.api.authenticate()
 
-kaggle.api.dataset_download_files('whenamancodes/blood-transfusion-dataset', path='/home/vikash/Desktop/Project_self/', unzip=True)
+kaggle.api.dataset_download_files('download dataset name', path='download path', unzip=True)
