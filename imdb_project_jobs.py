@@ -12,18 +12,16 @@ rds_port = Variable.get('rds_port')
 
 def download_data():
     kaggle.api.authenticate()
-    kaggle.api.dataset_download_files('whenamancodes/blood-transfusion-dataset', path='/home/vikash/Desktop/Project_self/imdb/', unzip=True)
+    kaggle.api.dataset_download_files('whenamancodes/blood-transfusion-dataset', path='download path', unzip=True)
 
 
 def local_to_rds(path,path2):
     conn = mysql.connector.connect(host=rds_host, port=rds_port,\
-        user=rds_user, passwd=rds_password,allow_local_infile=True,database="airflow_glue_6629")
-
-    # _path = "/home/vikash/Desktop/Project_self/imdb-dataset/"
-    # _path2 = "/home/vikash/Desktop/Project_self/imdb-dataset/*/*.tsv"
+        user=rds_user, passwd=rds_password,allow_local_infile=True,database="database name")
+    
     _path = path
     _path2 = path2
-    # tlist=['name_basics','title_basic','title_akas','title_rating','title_principal']
+   
     # Change the directory
     os.chdir(_path)
     files = os.listdir(_path)
