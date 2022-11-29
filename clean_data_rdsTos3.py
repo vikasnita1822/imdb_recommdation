@@ -1,37 +1,30 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
-
-# spark = SparkSession.builder.config("spark.jars", "/usr/share/java/mysql-connector-j-8.0.31.jar").master('local[*]').appName('rdstolocal').getOrCreate()                        
-spark = SparkSession.builder.config("spark.jars", "s3://deprojectimdbbkt/mysql-connector-j-8.0.31.jar").master('local').appName('rdstos3').getOrCreate()   
+                        
+spark = SparkSession.builder.config("spark.jars", "Jar file path").master('local').appName('rdstos3').getOrCreate()   
 
 df_title_basic = spark.read.format('jdbc').options(
-      url='jdbc:mysql://i6629imdb.cdyarwjuez7j.us-east-1.rds.amazonaws.com:3306/rds_6629',
+      url='rds database connection url',
       driver='com.mysql.cj.jdbc.Driver',
-      dbtable='title_basics', 
-      user='admin',
-      password='123456789').load()
+      dbtable='Table name', 
+      user='RDS username',
+      password='RDS password').load()
 
 
 df_title_akas = spark.read.format('jdbc').options(
-      url='jdbc:mysql://i6629imdb.cdyarwjuez7j.us-east-1.rds.amazonaws.com:3306/rds_6629',
+      url='rds database connection url',
       driver='com.mysql.cj.jdbc.Driver',
-      dbtable='title_akas', 
-      user='admin',
-      password='123456789').load()
+      dbtable='Table name', 
+      user='RDS username',
+      password='RDS password').load()
 
 df_title_ratings = spark.read.format('jdbc').options(
-      url='jdbc:mysql://i6629imdb.cdyarwjuez7j.us-east-1.rds.amazonaws.com:3306/rds_6629', 
+      url='rds database connection url',
       driver='com.mysql.cj.jdbc.Driver',
-      dbtable='title_ratings',
-      user='admin',
-      password='123456789').load()
-
-# df_title_ratings = spark.read.format("jdbc").option("url", "jdbc:mysql://i6629imdb.cdyarwjuez7j.us-east-1.rds.amazonaws.com:3306/6629_project") \
-#     .option("dbtable", "title_ratings") \
-#     .option("user", "admin").option("password", "123456789").load()
-
-# df_title_ratings = spark.read.jdbc("jdbc:mysql://i6629imdb.cdyarwjuez7j.us-east-1.rds.amazonaws.com:3306","6629_project.title_ratings",properties={"user": "admin", "password": "123456789"})
+      dbtable='Table name', 
+      user='RDS username',
+      password='RDS password').load()
 
 
 # df_title_ratings.show(10)
@@ -104,16 +97,16 @@ df_basic_akas_rating = df_title_basic.join(df_title_akas,df_title_akas.titleId =
 
 # ####  Writing cleaned data to S3
 
-df_title_basic.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3://deprojectimdbbkt/cleanRdsData/title_basics")
+df_title_basic.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3 path")
 
-df_title_ratings.coalesce(1).write.mode('overwrite').option("header",True).parquet("s3://deprojectimdbbkt/cleanRdsData/title_ratings")
+df_title_ratings.coalesce(1).write.mode('overwrite').option("header",True).parquet("s3 path")
 
-df_title_akas.coalesce(1).write.mode('overwrite').option("header",True).parquet("s3://deprojectimdbbkt/cleanRdsData/title_akas")
+df_title_akas.coalesce(1).write.mode('overwrite').option("header",True).parquet("s3 path")
 
 
-df_basic_rating.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3://deprojectimdbbkt/RDSedata/basic_rating")
-df_basic_akas.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3://deprojectimdbbkt/RDSedata/basic_akas")
-df_basic_akas_rating.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3://deprojectimdbbkt/RDSedata/basic_akas_rating")
+df_basic_rating.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3 path")
+df_basic_akas.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3 path")
+df_basic_akas_rating.coalesce(1).write.mode('overwrite').option("header",True).partitionBy('titleType').parquet("s3 path")
 
 # df_basic_rating.show(10)                   
 
