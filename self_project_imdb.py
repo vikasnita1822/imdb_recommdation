@@ -8,11 +8,11 @@ from airflow.providers.amazon.aws.operators.glue import GlueJobOperator
 from airflow.models import Variable
 aws_access_key = Variable.get('aws_access_key')
 aws_secret_key = Variable.get('aws_secret_key')
-path = "/home/vikash/Desktop/Project_self/imdb-dataset/"
-path2 = "/home/vikash/Desktop/Project_self/imdb-dataset/*/*.tsv"
+path = "local path"
+path2 = "local file path"
 
 default_args = {
-    'owner': 'Vikas',
+    'owner': 'dag owner name',
     'depends_on_past': False,
     'retries': 3
 }
@@ -47,8 +47,8 @@ with DAG(
     
     glue_job_step = GlueJobOperator(
         task_id = "glue_job_step",
-        job_name = "rdsTos3_vikas",
-        job_desc = f"triggering glue job {'rdsTos3_vikas'}",
+        job_name = "glue scrpit name ",
+        job_desc = f"triggering glue job {'job name'}",
         region_name = "us-east-1",
         iam_role_name = "AWSGlueRole",
         num_of_dpus = 1,
